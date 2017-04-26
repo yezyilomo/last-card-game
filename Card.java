@@ -15,13 +15,18 @@ public class Card{
     if(CARD_RANK==12){this.CARD_NAME="K";}
     else
     if(CARD_RANK==13){this.CARD_NAME="Q";}
+    else
+    if(CARD_RANK==14){this.CARD_NAME="JOKER"; this.CARD_COLOR="RED";}
+    else
+    if(CARD_RANK==15){this.CARD_NAME="JOKER"; this.CARD_COLOR="BLACK";}
     else    
     this.CARD_NAME=Integer.toString(CARD_RANK);
     
     if(CARD_SUIT.equals("HEART") || CARD_SUIT.equals("DIAMOND")){
      this.CARD_COLOR="RED";
     }
-    else{
+    else
+    if(CARD_SUIT.equals("CLUB") || CARD_SUIT.equals("SPADE")){
       this.CARD_COLOR="BLACK";
     }
 

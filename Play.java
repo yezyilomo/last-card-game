@@ -4,30 +4,28 @@ public class Play extends Player{
  public Play(String name,int playerId,int hs,Pile usedPile){
    super(name,playerId,hs,usedPile);
  }
- 
- 
+
+
  public static void main(String []args){
- 
+
    Deck dk=new Deck();
    Pile pp=new Pile();
-   Player.numberOfPlayers=3;
-   pl=new Play[3];
-   
+   Player.numberOfPlayers=2;
+   pl=new Play[Player.numberOfPlayers];
+
    dk.shuffleCards();
-   for(int i=0;i<3;i++){
-    pl[i]=new Play("Yezy",0,4,pp);
+   for(int i=0;i<Player.numberOfPlayers;i++){
+    pl[i]=new Play("Yezy",i,4,pp);
     pl[0].usedDeck=dk;
     pl[i].dealCards();
    }
-        
+
    while(true){
-   pl[iterate%numberOfPlayers].showHandCards();
-   Scanner in=new Scanner(System.in);
- 
-   pl[iterate%numberOfPlayers].playCard();
-   System.out.println(pl[0].cardsOnHand.size());
-   System.out.println(dk.deck.size());
-   System.out.println(pp.pile.size());
+     iterate=iterate%numberOfPlayers;
+   pl[iterate].showHandCards();
+
+   pl[iterate].playCard();
+    System.out.println("next Player is :" +iterate);
    }
   }
 
