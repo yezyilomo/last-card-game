@@ -1,17 +1,18 @@
 import java.util.*;
-public abstract class Player{
-  private static int handSize=5; //default handSize
-  public static Deck usedDeck;   //deck of card to be used
-  public static Pile pl;        // pile to be used
-  public static int numberOfPlayers=0;
-  public static int iterate=0;
-  private static int x=1;
-  public static boolean semaphore=false;
-  public static Stack<Card> temp=new Stack<Card>();
 
-  public final int playerId;
-  public final String playerName;
-  public LinkedList<Card> cardsOnHand;
+public abstract class Player{
+  private static int handSize=5;              //default handSize
+  public static Deck usedDeck;               //deck of card to be used
+  public static Pile pl;                    // pile to be used
+  public static int numberOfPlayers=0;     //default number of players
+  public static int iterate=0;            //this is for who follows to play
+  private static int x=1;                //used with combination of 8 card to reverse the game
+  public static boolean semaphore=false;//used with combination of 8 card to reverse the game
+  public static Stack<Card> temp=new Stack<Card>(); //used to store cards to be passed to next player when the player plays 2
+
+  public final int playerId;   //unique id of each player
+  public final String playerName;  //player name
+  public LinkedList<Card> cardsOnHand;  //these are cards on players hand
 
   public Player(String name,int playerId,int hs,Pile usedPile){
     this.playerName=name;
@@ -19,7 +20,6 @@ public abstract class Player{
     Player.handSize=hs;
     Player.pl=usedPile;
   }
-
 
   public void dealCards(){
     this.cardsOnHand=new LinkedList<Card>();
@@ -47,7 +47,7 @@ public abstract class Player{
     System.out.println("************<<<<<>>>>>************");
   }
 
-  public boolean passOrPlay(){
+  public boolean pass(){
     System.out.println("Enter P to pass or C to respond");
     Scanner input=new Scanner(System.in);
     char k=input.next().charAt(0);
@@ -60,14 +60,24 @@ public abstract class Player{
     return false;
   }
 
+  public void updateTemp(){
+    temp.push(usedDeck.deck.pop());
+    temp.push(usedDeck.deck.pop());
+  }
+
+  public  void throwCard(Card cd){
+    this.cardsOnHand.remove(cd);
+    pl.pile.push(cd);
+  }
+
   public void playCard(){
        if(!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("7") ){
 
-         if( passOrPlay() ){iterate=iterate+x;return;}
+         if( pass() ){iterate=iterate+x;return;}
        }
 
        if((!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("2") && !temp.isEmpty()) ){
-         if( passOrPlay() ){
+         if( pass() ){
          for(Card c:temp){
          this.cardsOnHand.push(c);
          }
@@ -77,10 +87,9 @@ public abstract class Player{
          }
          }
 
-
        if(!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("8") && semaphore ){
 
-         if( passOrPlay() ){
+         if( pass() ){
           semaphore=false;
           x=(-1)*x;
           iterate=iterate+x;
@@ -128,31 +137,44 @@ public abstract class Player{
          Card card=cardsOnHand.get(i);
          if(pl.pile.isEmpty() || card.getCardName().equals(pl.pile.peek().getCardName()) || card.getCardSuit().equals(pl.pile.peek().getCardSuit()) || card.getCardName().equals("J") || pl.pile.peek().getCardName().equals("J") ){
 
-            if(( !pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("7") && !card.getCardName().equals("7")) || ( !pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("7") && !card.getCardName().equals("7") )){
+            if( !pl.pile.isEmpty() && card.getCardName().equals("7") && !semaphore){
+              semaphore=true;
+              this.throwCard(card);
+              iterate=iterate+x;
+              return;
+            }
+            else
+            if( !pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("7") && !card.getCardName().equals("7") && semaphore ){
+               semaphore=false;
                this.penalt(2);
+               iterate=iterate+x;
+               return;
+            }
+            else
+            if( !pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("7") && card.getCardName().equals("7") && semaphore ){
+               semaphore=false;
+               this.throwCard(card);
                iterate=iterate+x;
                return;
             }
 
             if(!pl.pile.isEmpty() && !semaphore && card.getCardName().equals("8") ){
               semaphore=true;
-              this.cardsOnHand.remove(card);   //FIRST TO PLAY 8
-              pl.pile.push(card);
+              this.throwCard(card);               //FIRST TO PLAY 8
               iterate=iterate+x;
               return;
              }
             else
-            if(!pl.pile.isEmpty() && semaphore && card.getCardName().equals("8") ){
+            if(!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("8") && semaphore && card.getCardName().equals("8") ){
              semaphore=false;
-             this.cardsOnHand.remove(card);
-             pl.pile.push(card);              //RESPONDING TO PLAYED 8
+             this.throwCard(card);              //RESPONDING TO PLAYED 8
              iterate=iterate+x;
              return;
             }
             else
-            if(!pl.pile.isEmpty() && semaphore && !card.getCardName().equals("8") ){
+            if(!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("8") && semaphore && !card.getCardName().equals("8") ){
             semaphore=false;
-            this.penalt(2);                  //HAVE'NT PLAYED 8
+            this.penalt(2);                    //HAVE'NT PLAYED 8
             x=(-1)*x;
             iterate=iterate+x;
           if(iterate==0) {
@@ -173,13 +195,9 @@ public abstract class Player{
             return;
             }
 
-            if( !pl.pile.isEmpty() && card.getCardName().equals("2") && temp.isEmpty() ){
-              this.cardsOnHand.remove(card);
-              pl.pile.push(card);
-
-              temp.push(usedDeck.deck.pop());
-              temp.push(usedDeck.deck.pop());
-
+            if( !pl.pile.isEmpty() && card.getCardName().equals("2") && (temp.isEmpty() || !temp.isEmpty()) ){
+              this.throwCard(card);
+              this.updateTemp();               //Playing 2 for the first time or respondig to the played 2
               iterate=iterate+x;
               return;
             }
@@ -187,16 +205,15 @@ public abstract class Player{
             if((!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("2") && !temp.isEmpty()) && !card.getCardName().equals("2") ){
              System.out.println("Ooooops! Wrong card");
              this.penalt(2);
-             for(Card c:temp){
-             this.cardsOnHand.push(c);
+             for(Card c:temp){             //Played wrong card instead of 2
+             this.cardsOnHand.push(c);  //to be examined later
             }
             temp=new Stack<Card>();
             iterate=iterate+x;
              return;
             }
 
-            this.cardsOnHand.remove(card);
-            pl.pile.push(card);
+            this.throwCard(card);
             iterate=iterate+x;
             return;
           }
@@ -219,12 +236,10 @@ public abstract class Player{
      }
   }
 
-
  public void penalt(int pv){
    for(int i=0;i<pv;i++){
      this.drawCard();
    }
  }
-
 
 }

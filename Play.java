@@ -1,10 +1,10 @@
 import java.util.*;
+
 public class Play extends Player{
  public static Play pl[];
  public Play(String name,int playerId,int hs,Pile usedPile){
    super(name,playerId,hs,usedPile);
  }
-
 
  public static void main(String []args){
 

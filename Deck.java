@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Deck{
   public static Stack<Card> deck;
-  public Deck(){ 
+  public Deck(){
 
      deck=new Stack<Card>();
 
