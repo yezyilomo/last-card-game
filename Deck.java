@@ -13,7 +13,7 @@ public class Deck{
      }
   }
 
-  public String setSuit(int i){
+  private String setSuit(int i){
 
      if(i==1) return "DIAMOND";
      if(i==2) return "HEART";

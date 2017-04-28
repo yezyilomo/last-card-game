@@ -1,18 +1,18 @@
-import java.util.*;
+ import java.util.*;
 
 public abstract class Player{
   private static int handSize=5;              //default handSize
   public static Deck usedDeck;               //deck of card to be used
-  public static Pile pl;                    //pile to be used
+  private static Pile pl;                    //pile to be used
   public static int numberOfPlayers=0;     //default number of players
   public static int iterate=0;            //this is for who follows to play
   private static int x=1;                //used with combination of 8 card to reverse the game
-  public static boolean semaphore=false;//used with combination of 8 card to reverse the game
-  public static Stack<Card> temp=new Stack<Card>(); //used to store cards to be passed to next player when the player plays 2
+  private static boolean semaphore=false;//used with combination of 8 card to reverse the game
+  private static Stack<Card> temp=new Stack<Card>(); //used to store cards to be passed to next player when the player plays 2
 
-  public final int playerId;         //unique id of each player
-  public final String playerName;   //player name
-  public LinkedList<Card> cardsOnHand;  //these are cards on players hand
+  private int playerId;         //unique id of each player
+  private String playerName;   //player name
+  private LinkedList<Card> cardsOnHand;  //these are cards on players hand
 
   public Player(String name,int playerId,int hs,Pile usedPile){
     this.playerName=name;
@@ -28,7 +28,7 @@ public abstract class Player{
     }
   }
 
-  public Card drawCard(){
+  protected Card drawCard(){
     Card drawn=usedDeck.deck.pop();
     this.cardsOnHand.add(drawn);
     return drawn;
@@ -47,7 +47,7 @@ public abstract class Player{
      System.out.println("************<<<<<>>>>>************");
   }
 
-  public boolean pass(){
+  protected boolean pass(){
     System.out.println("Enter P to pass or C to respond");
     Scanner input=new Scanner(System.in);
     char k=input.next().charAt(0);
@@ -60,17 +60,17 @@ public abstract class Player{
     return false;
   }
 
-  public void updateTemp(){
+  protected void updateTemp(){
     temp.push(usedDeck.deck.pop());
     temp.push(usedDeck.deck.pop());
   }
 
-  public void throwCard(Card cd){
+  protected void throwCard(Card cd){
     this.cardsOnHand.remove(cd);
     pl.pile.push(cd);
   }
 
-  public void penalt(int pv){
+  protected void penalt(int pv){
     for(int i=0;i<pv;i++){
       this.drawCard();
     }
@@ -143,7 +143,7 @@ public abstract class Player{
          Card card=cardsOnHand.get(i);
          if(pl.pile.isEmpty() || card.getCardName().equals(pl.pile.peek().getCardName()) || card.getCardSuit().equals(pl.pile.peek().getCardSuit()) || card.getCardName().equals("J") || pl.pile.peek().getCardName().equals("J") ){
 
-            if( !pl.pile.isEmpty() && card.getCardName().equals("7") && !semaphore){
+            if( card.getCardName().equals("7") && !semaphore){
               semaphore=true;
               this.throwCard(card);          //Playing 7 for the first time
               iterate=iterate+x;
@@ -152,35 +152,36 @@ public abstract class Player{
             else
             if( !pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("7") && !card.getCardName().equals("7") && semaphore ){
                semaphore=false;
+               System.out.println("\nOoooops! Wrong card\n");
                this.penalt(2);           //Responding wrong card instead of 7
                iterate=iterate+x;
                return;
             }
             else
             if( !pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("7") && card.getCardName().equals("7") && semaphore ){
-               //semaphore=false;       we don't set it false until the next player plays
-               this.throwCard(card);    //Responding 7 to
+               this.throwCard(card);    //Right respond to 7
                iterate=iterate+x;
                return;
             }
 
-            if(!pl.pile.isEmpty() && !semaphore && card.getCardName().equals("8") ){
+            if( !semaphore && card.getCardName().equals("8") ){
               semaphore=true;
-              this.throwCard(card);               //FIRST TO PLAY 8
+              this.throwCard(card);               //First to play 8
               iterate=iterate+x;
               return;
              }
             else
             if(!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("8") && semaphore && card.getCardName().equals("8") ){
              semaphore=false;
-             this.throwCard(card);              //RESPONDING TO PLAYED 8
+             this.throwCard(card);              //Responding to played 8
              iterate=iterate+x;
              return;
             }
             else
             if(!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("8") && semaphore && !card.getCardName().equals("8") ){
             semaphore=false;
-            this.penalt(2);                    //HAVE'NT PLAYED 8
+            System.out.println("\nOoooops! Wrong card\n");
+            this.penalt(2);                    //Wrong respond to 8
             x=(-1)*x;
             iterate=iterate+x;
           if(iterate==0) {
@@ -201,17 +202,17 @@ public abstract class Player{
             return;
             }
 
-            if( !pl.pile.isEmpty() && card.getCardName().equals("2") && (temp.isEmpty() || !temp.isEmpty()) ){
+            if( card.getCardName().equals("2") && (temp.isEmpty() || !temp.isEmpty()) ){
               this.throwCard(card);
-              this.updateTemp();               //Playing 2 for the first time or respondig to the played 2
+              this.updateTemp();               //Playing 2 for the first time or respondig to played 2
               iterate=iterate+x;
               return;
             }
             else
             if((!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("2") && !temp.isEmpty()) && !card.getCardName().equals("2") ){
-             System.out.println("Ooooops! Wrong card");
+             System.out.println("\nOoooops! Wrong card\n");
              this.penalt(2);
-             for(Card c:temp){             //Played wrong card instead of 2
+             for(Card c:temp){             //Responding wrong card instead of 2
              this.cardsOnHand.push(c);    //to be examined later
             }
             temp=new Stack<Card>();
@@ -231,7 +232,7 @@ public abstract class Player{
               temp=new Stack<Card>();
              }
 
-             System.out.println("Ooooops! Wrong card");
+             System.out.println("\nOoooops! Wrong card\n");
              semaphore=false;
              this.penalt(2);
              iterate=iterate+x;
@@ -247,7 +248,7 @@ public abstract class Player{
           temp=new Stack<Card>();
          }
 
-        System.out.println("Ooooops! Wrong card");
+        System.out.println("\nOoooops! Wrong card\n");
         semaphore=false;
         this.penalt(2);
         iterate=iterate+x;
