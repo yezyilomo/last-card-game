@@ -1,91 +1,58 @@
 import java.util.*;
 
-public class Player{
-  protected static int handSize=5;              //default handSize
-  public static Deck usedDeck;               //deck of card to be used
-  public static Pile pl;                    //pile to be used
-  public static int numberOfPlayers=0;     //default number of players
-  public static int iterate=0;            //this is for who follows to play
-  protected static int x=1;                //used with combination of 8 card to reverse the game
-  public static boolean semaphore=false;//used with combination of 8 card to reverse the game
-  public static Stack<Card> temp=new Stack<Card>(); //used to store cards to be passed to next player when the player plays 2
+public class ComputerPlayer extends Player{
 
-  public final int playerId;         //unique id of each player
-  public final String playerName;   //player name
-  public LinkedList<Card> cardsOnHand;  //these are cards on players hand
-
-  public Player(String name,int playerId,int hs,Pile usedPile){
-    this.playerName=name;
-    this.playerId=playerId;
-    Player.handSize=hs;
-    Player.pl=usedPile;
+  public ComputerPlayer(String name,int playerId,int hs,Pile usedPile){
+    super(name,playerId,hs,usedPile);
   }
 
-  public void dealCards(){
-    this.cardsOnHand=new LinkedList<Card>();
-    for(int i=0;i<Player.handSize;i++){
-    this.drawCard();
-    }
-  }
-
-  public Card drawCard(){
-    if(this.usedDeck.deck.isEmpty()){
-      Pile.shufflePileCards(usedDeck);
-    }
-    Card drawn=usedDeck.deck.pop();
-    this.cardsOnHand.add(drawn);
-    return drawn;
-  }
-
+/*
   public void showHandCards(){
-    System.out.println("************Your Cards************");
+    System.out.println("               ************Computer Cards************");
     for(int i=0;i<this.cardsOnHand.size();i++){
-      System.out.println(this.cardsOnHand.get(i).getCardName()+","+this.cardsOnHand.get(i).getCardSuit());
+      System.out.println("               "+this.cardsOnHand.get(i).getCardName()+","+this.cardsOnHand.get(i).getCardSuit());
     }
-    System.out.println("************<<<<< "+this.playerId+" >>>>>************");
+    System.out.println("               ************<<<<< "+this.playerId+" >>>>>************");
     if(!pl.pile.isEmpty()){
-     System.out.println("On Pile=> "+ pl.pile.peek().getCardName()+","+pl.pile.peek().getCardSuit());
+     System.out.println("               On Pile=> "+ pl.pile.peek().getCardName()+","+pl.pile.peek().getCardSuit());
     }
-    else{System.out.println("On Pile=> Empty");}
-     System.out.println("************<<<<<>>>>>************");
+    else{System.out.println("               On Pile=> Empty");}
+     System.out.println("               ************<<<<<>>>>>************");
   }
+
+  */
 
   public boolean pass(){
-    System.out.println("Enter P to pass or C to respond");
-    Scanner input=new Scanner(System.in);
-    char k=input.next().charAt(0);
-    while(k!='P' && k!='C'){
-    System.out.println("Invalid input \nEnter P to pass or C to respond");
-    input=new Scanner(System.in);
-    k=input.next().charAt(0);}
-
-    if(k=='P') return true;
+    char k;
+    if( compareSpecial( pl.pile.peek() ) ) return true;
     return false;
   }
 
-  public void updateTemp(){
-    if(this.usedDeck.deck.size()<2){
-      Pile.shufflePileCards(usedDeck);
-    }
-    temp.push(usedDeck.deck.pop());
-    temp.push(usedDeck.deck.pop());
-  }
-
-  public void throwCard(Card cd){
-    this.cardsOnHand.remove(cd);
-    pl.pile.push(cd);
-    if(this.cardsOnHand.isEmpty()){
-      if(!pl.pile.peek().getCardName().equals("2") && !pl.pile.peek().getCardName().equals("7") && !pl.pile.peek().getCardName().equals("8") && !pl.pile.peek().getCardName().equals("J")){
-        System.out.println("\nCongratulation "+this.playerName+" You have won\n");
-        System.exit(0);
+  public boolean compareSpecial(Card cardOnPile){
+    for(Card i:this.cardsOnHand){
+      if(cardOnPile.getCardName().equals(i.getCardName()) ){
+         return true;
       }
     }
+    return false;
   }
 
-  public void penalt(int pv){
-    for(int i=0;i<pv;i++){
-      this.drawCard();
+  public boolean compareToPlay(Card cardOnPile){
+    for(Card i:this.cardsOnHand){
+      if(cardOnPile.getCardName().equals(i.getCardName()) || cardOnPile.getCardSuit().equals(i.getCardSuit()) ){
+         return true;
+      }
     }
+    return false;
+  }
+
+  public Card cardToPlay(Card cardOnPile){
+    for(Card i:this.cardsOnHand){
+      if(cardOnPile.getCardName().equals(i.getCardName()) || cardOnPile.getCardSuit().equals(i.getCardSuit()) ){
+         return i;
+      }
+    }
+    return null;
   }
 
   public void playCard(){
@@ -132,22 +99,16 @@ public class Player{
 
      char m='n';
      if(temp.isEmpty() && !semaphore){
-     System.out.println("Enter D to drawCard or C to continue");
-     Scanner in=new Scanner(System.in);
-     m=in.next().charAt(0);
-     while(m!='D' && m!='C'){
-         System.out.println("Invalid input \nEnter D to drawCard or C to continue");
-         in=new Scanner(System.in);
-         m=in.next().charAt(0);
-     } }
+       if(compareToPlay( pl.pile.peek() ) ){
+         m='C';
+       }
+       else m='D';
+     }
 
      if(m=='D'){this.drawCard(); iterate=iterate+x;}
      else{
-      Scanner in=new Scanner(System.in);
-      System.out.println("CardName");
-      String cardName=in.next();
-      System.out.println("CardSuit");
-      String cardSuit=in.next();
+      String cardName=cardToPlay(pl.pile.peek()).getCardName();
+      String cardSuit=cardToPlay(pl.pile.peek()).getCardSuit();
 
        for(int i=0;i<this.cardsOnHand.size();i++){
 
