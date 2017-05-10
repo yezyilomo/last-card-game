@@ -2,17 +2,21 @@ import java.util.*;
 
 public class ComputerPlayer extends Player{
 
-  public ComputerPlayer(String name,int playerId,int hs,Pile usedPile){
-    super(name,playerId,hs,usedPile);
+  public ComputerPlayer(String name,int hs,Pile usedPile){
+    super(name,hs,usedPile);
   }
 
+
+public void showHandCards(){
+  //Do Nothing
+}
 /*
   public void showHandCards(){
     System.out.println("               ************Computer Cards************");
     for(int i=0;i<this.cardsOnHand.size();i++){
       System.out.println("               "+this.cardsOnHand.get(i).getCardName()+","+this.cardsOnHand.get(i).getCardSuit());
     }
-    System.out.println("               ************<<<<< "+this.playerId+" >>>>>************");
+
     if(!pl.pile.isEmpty()){
      System.out.println("               On Pile=> "+ pl.pile.peek().getCardName()+","+pl.pile.peek().getCardSuit());
     }
@@ -23,7 +27,6 @@ public class ComputerPlayer extends Player{
   */
 
   public boolean pass(){
-    char k;
     if( compareSpecial( pl.pile.peek() ) ) return true;
     return false;
   }
@@ -49,6 +52,15 @@ public class ComputerPlayer extends Player{
   public Card cardToPlay(Card cardOnPile){
     for(Card i:this.cardsOnHand){
       if(cardOnPile.getCardName().equals(i.getCardName()) || cardOnPile.getCardSuit().equals(i.getCardSuit()) ){
+         return i;
+      }
+    }
+    return null;
+  }
+  
+  public Card specialCardToPlay(Card cardOnPile){
+    for(Card i:this.cardsOnHand){
+      if(cardOnPile.getCardName().equals(i.getCardName()) ){
          return i;
       }
     }
@@ -98,17 +110,54 @@ public class ComputerPlayer extends Player{
        }
 
      char m='n';
-     if(temp.isEmpty() && !semaphore){
-       if(compareToPlay( pl.pile.peek() ) ){
-         m='C';
+     if(temp.isEmpty() && !semaphore){ //For non special cards
+       if(pl.pile.isEmpty() || compareToPlay( pl.pile.peek() ) ){
+         m='N';
        }
        else m='D';
      }
+     else if(compareSpecial(pl.pile.peek())){ //For Special cards
+       m='S';
+     }
+     else m='P';
 
-     if(m=='D'){this.drawCard(); iterate=iterate+x;}
+     if(m=='D'){this.drawCard(); iterate=iterate+x; return;}
+     if(m=='P'){
+       if(pl.pile.peek().getCardName().equals("2")){
+        for(Card c:temp){
+         this.cardsOnHand.push(c);
+         }
+         temp=new Stack<Card>();
+         iterate=iterate+x;
+         return;
+       }
+       semaphore=false;
+       iterate=iterate+x;
+       return;
+     } 
      else{
-      String cardName=cardToPlay(pl.pile.peek()).getCardName();
-      String cardSuit=cardToPlay(pl.pile.peek()).getCardSuit();
+        String cardName;
+        String cardSuit;
+      if(!temp.isEmpty() || semaphore){
+        if(pl.pile.isEmpty()){
+         cardName=this.cardsOnHand.get(0).getCardName();
+         cardSuit=this.cardsOnHand.get(0).getCardSuit();
+        }
+        else{
+        cardName=specialCardToPlay(pl.pile.peek()).getCardName();
+        cardSuit=specialCardToPlay(pl.pile.peek()).getCardSuit();
+        }
+      }
+      else{
+        if(pl.pile.isEmpty()){
+         cardName=this.cardsOnHand.get(0).getCardName();
+         cardSuit=this.cardsOnHand.get(0).getCardSuit();
+        }
+        else{
+        cardName=cardToPlay(pl.pile.peek()).getCardName();
+        cardSuit=cardToPlay(pl.pile.peek()).getCardSuit();
+        }
+      }
 
        for(int i=0;i<this.cardsOnHand.size();i++){
 

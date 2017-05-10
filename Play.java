@@ -13,8 +13,8 @@ public class Play {
    dk.shuffleCards();
    for(int i=0;i<Player.numberOfPlayers;i++){
      if(i==0)
-    pl[i]=new Player("Yezy",i,4,pp);
-     else pl[i]=new ComputerPlayer("Ilomo",i,4,pp);
+    pl[i]=new Player("Yezy",4,pp);
+     else pl[i]=new ComputerPlayer("Ilomo",4,pp);
     pl[0].usedDeck=dk;
     pl[i].dealCards();
    }

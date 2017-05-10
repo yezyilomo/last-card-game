@@ -6,17 +6,14 @@ public class Player{
   public static Pile pl;                    //pile to be used
   public static int numberOfPlayers=0;     //default number of players
   public static int iterate=0;            //this is for who follows to play
-  protected static int x=1;                //used with combination of 8 card to reverse the game
-  public static boolean semaphore=false;//used with combination of 8 card to reverse the game
+  protected static int x=1;              //used to determine next players turn and to reverse the game
+  public static boolean semaphore=false;//used to keep track whether a player has played 8 or 7 card
   public static Stack<Card> temp=new Stack<Card>(); //used to store cards to be passed to next player when the player plays 2
-
-  public final int playerId;         //unique id of each player
-  public final String playerName;   //player name
+  public final String playerName;     //player name
   public LinkedList<Card> cardsOnHand;  //these are cards on players hand
 
-  public Player(String name,int playerId,int hs,Pile usedPile){
+  public Player(String name,int hs,Pile usedPile){
     this.playerName=name;
-    this.playerId=playerId;
     Player.handSize=hs;
     Player.pl=usedPile;
   }
@@ -38,15 +35,15 @@ public class Player{
   }
 
   public void showHandCards(){
-    System.out.println("************Your Cards************");
+    System.out.println("\n************Your Cards************");
     for(int i=0;i<this.cardsOnHand.size();i++){
       System.out.println(this.cardsOnHand.get(i).getCardName()+","+this.cardsOnHand.get(i).getCardSuit());
     }
-    System.out.println("************<<<<< "+this.playerId+" >>>>>************");
+    System.out.println("************<<<<<>>>>>************");
     if(!pl.pile.isEmpty()){
-     System.out.println("On Pile=> "+ pl.pile.peek().getCardName()+","+pl.pile.peek().getCardSuit());
+     System.out.println("       On Pile=> "+ pl.pile.peek().getCardName()+","+pl.pile.peek().getCardSuit());
     }
-    else{System.out.println("On Pile=> Empty");}
+    else{System.out.println("       On Pile=> Empty");}
      System.out.println("************<<<<<>>>>>************");
   }
 
@@ -54,10 +51,13 @@ public class Player{
     System.out.println("Enter P to pass or C to respond");
     Scanner input=new Scanner(System.in);
     char k=input.next().charAt(0);
+    k=Character.toUpperCase(k);
     while(k!='P' && k!='C'){
     System.out.println("Invalid input \nEnter P to pass or C to respond");
     input=new Scanner(System.in);
-    k=input.next().charAt(0);}
+    k=input.next().charAt(0);
+    k=Character.toUpperCase(k);
+    }
 
     if(k=='P') return true;
     return false;
@@ -83,6 +83,7 @@ public class Player{
   }
 
   public void penalt(int pv){
+    System.out.println("\nOoooops! Wrong card");
     for(int i=0;i<pv;i++){
       this.drawCard();
     }
@@ -135,10 +136,12 @@ public class Player{
      System.out.println("Enter D to drawCard or C to continue");
      Scanner in=new Scanner(System.in);
      m=in.next().charAt(0);
+     m=Character.toUpperCase(m);
      while(m!='D' && m!='C'){
          System.out.println("Invalid input \nEnter D to drawCard or C to continue");
          in=new Scanner(System.in);
          m=in.next().charAt(0);
+         m=Character.toUpperCase(m);
      } }
 
      if(m=='D'){this.drawCard(); iterate=iterate+x;}
@@ -146,8 +149,10 @@ public class Player{
       Scanner in=new Scanner(System.in);
       System.out.println("CardName");
       String cardName=in.next();
+      cardName=cardName.toUpperCase();
       System.out.println("CardSuit");
       String cardSuit=in.next();
+      cardSuit=cardSuit.toUpperCase();
 
        for(int i=0;i<this.cardsOnHand.size();i++){
 
@@ -221,7 +226,6 @@ public class Player{
             }
             else
             if((!pl.pile.isEmpty() && pl.pile.peek().getCardName().equals("2") && !temp.isEmpty()) && !card.getCardName().equals("2") ){
-             System.out.println("Ooooops! Wrong card");
              this.penalt(2);
              for(Card c:temp){             //Played wrong card instead of 2
              this.cardsOnHand.push(c);    //to be examined later
@@ -243,7 +247,6 @@ public class Player{
               temp=new Stack<Card>();
              }
 
-             System.out.println("Ooooops! Wrong card");
              semaphore=false;
              this.penalt(2);
              iterate=iterate+x;
@@ -259,7 +262,6 @@ public class Player{
           temp=new Stack<Card>();
          }
 
-        System.out.println("Ooooops! Wrong card");
         semaphore=false;
         this.penalt(2);
         iterate=iterate+x;
