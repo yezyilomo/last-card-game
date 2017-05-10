@@ -97,4 +97,11 @@ There are many, many variations of this game, but the rules above are the ones t
        ii. pile- a conteiner for the cards on pile
 
      **Methods in this object are 
-       i. shuffle Cards on a Pile- this will be used incase cards on deck have all been drawn up but the game isn't over        
+       i. shuffle Cards on a Pile- this will be used incase cards on deck have all been drawn up but the game isn't over
+       
+5.ComputerPleyer Object
+     **Methods in this Object are
+       i. compareSpecial
+       ii. compareToPlay
+       iii. cardToPlay
+       iv. specialCardToPlay
