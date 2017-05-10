@@ -1,4 +1,4 @@
-# Class-Project
+# Project Scenario
 Boredom is situation that actually meets anyone at a certain point, it may either be for a short time, in a while or lifetime. The most affected people are those in situations such as admitted patients in hospital for certain treatments, disable people, older people and many other stigmatized people in the society, yet many of them have access to digital devices such as PCs, smartphones etc.To reduce the boredom state there is a need that a person should recreate.
 In our own decision we decide the best way to solve the boredom problem is by playing LAST CARD game.
 
