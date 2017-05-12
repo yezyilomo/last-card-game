@@ -7,7 +7,7 @@ public class Pile{
   pile=new Stack<Card>();
  }
 
- public static void shufflePileCards(Deck usedDeck){
+ public static void shufflePileCards(DeckWithoutJokers usedDeck){
     Card top=pile.pop();
     usedDeck.deck=pile;
     pile=new Stack<Card>();

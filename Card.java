@@ -1,50 +1,50 @@
 public class Card{
- private int CARD_RANK;
- private String CARD_NAME;
- private String CARD_SUIT;
- private String CARD_COLOR;
+ private int cardRank;
+ private String cardName;
+ private String cardSuit;
+ private String cardColor;
 
- public Card(int CARD_RANK,String CARD_SUIT){
-    this.CARD_RANK=CARD_RANK;
-    this.CARD_SUIT=CARD_SUIT;
+ public Card(int cardRank,String cardSuit){
+    this.cardRank=cardRank;
+    this.cardSuit=cardSuit;
 
-    if(CARD_RANK==1){this.CARD_NAME="A";}
+    if(cardRank==1){this.cardName="A";}
     else
-    if(CARD_RANK==11){this.CARD_NAME="J";}
+    if(cardRank==11){this.cardName="J";}
     else
-    if(CARD_RANK==12){this.CARD_NAME="K";}
+    if(cardRank==12){this.cardName="K";}
     else
-    if(CARD_RANK==13){this.CARD_NAME="Q";}
+    if(cardRank==13){this.cardName="Q";}
     else
-    if(CARD_RANK==14){this.CARD_NAME="JOKER"; this.CARD_COLOR="RED";}
+    if(cardRank==14){this.cardName="JOKER"; this.cardColor="RED";}
     else
-    if(CARD_RANK==15){this.CARD_NAME="JOKER"; this.CARD_COLOR="BLACK";}
+    if(cardRank==15){this.cardName="JOKER"; this.cardColor="BLACK";}
     else
-    this.CARD_NAME=Integer.toString(CARD_RANK);
+    this.cardName=Integer.toString(cardRank);
 
-    if(CARD_SUIT.equals("HEART") || CARD_SUIT.equals("DIAMOND")){
-     this.CARD_COLOR="RED";
+    if(cardSuit.equals("HEART") || cardSuit.equals("DIAMOND")){
+     this.cardColor="RED";
     }
     else
-    if(CARD_SUIT.equals("CLUB") || CARD_SUIT.equals("SPADE")){
-      this.CARD_COLOR="BLACK";
+    if(cardSuit.equals("CLUB") || cardSuit.equals("SPADE")){
+      this.cardColor="BLACK";
     }
   }
 
   public int getCardRank(){
-    return this.CARD_RANK;
+    return this.cardRank;
   }
 
   public String getCardName(){
-    return this.CARD_NAME;
+    return this.cardName;
   }
 
     public String getCardSuit(){
-    return this.CARD_SUIT;
+    return this.cardSuit;
   }
 
     public String getCardColor(){
-    return this.CARD_COLOR;
+    return this.cardColor;
 }
 
 }

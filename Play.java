@@ -1,28 +1,28 @@
 import java.util.*;
 
 public class Play {
- public static Player pl[];
+ public static Player listOfPlayers[];
 
  public static void main(String []args){
 
-   Deck dk=new Deck();
-   Pile pp=new Pile();
+   DeckWithoutJokers deck=new DeckWithoutJokers();
+   Pile pile=new Pile();
    Player.numberOfPlayers=2;
-   pl=new Player[Player.numberOfPlayers];
+   listOfPlayers=new Player[Player.numberOfPlayers];
 
-   dk.shuffleCards();
+   deck.shuffleCards();
    for(int i=0;i<Player.numberOfPlayers;i++){
      if(i==0)
-    pl[i]=new Player("Yezy",4,pp);
-     else pl[i]=new ComputerPlayer("Ilomo",4,pp);
-    pl[0].usedDeck=dk;
-    pl[i].dealCards();
+    listOfPlayers[i]=new Player("Yezy",4,pile);
+     else listOfPlayers[i]=new SimulatedPlayer("Ilomo",4,pile);
+    listOfPlayers[0].usedDeck=deck;
+    listOfPlayers[i].dealCards();
    }
 
    while(true){
-   Player.iterate=Player.iterate%Player.numberOfPlayers;
-   pl[Player.iterate].showHandCards();
-   pl[Player.iterate].playCard();
+   Player.nextPlayer=Player.nextPlayer%Player.numberOfPlayers;
+   listOfPlayers[Player.nextPlayer].showHandCards();
+   listOfPlayers[Player.nextPlayer].playCard();
    }
   }
 

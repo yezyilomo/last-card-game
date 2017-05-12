@@ -1,4 +1,4 @@
-public class DeckWithJokers extends Deck{
+public class DeckWithJokers extends DeckWithoutJokers{
   public DeckWithJokers(){
     super();
     deck.push(new Card(14,"NONE"));

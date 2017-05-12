@@ -1,8 +1,8 @@
 import java.util.*;
 
-public class Deck{
+public class DeckWithoutJokers{
   public static Stack<Card> deck;
-  public Deck(){
+  public DeckWithoutJokers(){
 
      deck=new Stack<Card>();
 
@@ -24,7 +24,7 @@ public class Deck{
   }
 
   public static void shuffleCards(){
-    new Deck();
+    new DeckWithoutJokers();
     Card cardArray[]=new Card[52];
     Random rand=new Random();
 
