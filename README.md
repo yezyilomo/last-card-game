@@ -1,4 +1,4 @@
-# Class-Project
+# Project Scenario
 Boredom is situation that actually meets anyone at a certain point, it may either be for a short time, in a while or lifetime. The most affected people are those in situations such as admitted patients in hospital for certain treatments, disable people, older people and many other stigmatized people in the society, yet many of them have access to digital devices such as PCs, smartphones etc.To reduce the boredom state there is a need that a person should recreate.
 In our own decision we decide the best way to solve the boredom problem is by playing LAST CARD game.
 
@@ -97,4 +97,11 @@ There are many, many variations of this game, but the rules above are the ones t
        ii. pile- a conteiner for the cards on pile
 
      **Methods in this object are 
-       i. shuffle Cards on a Pile- this will be used incase cards on deck have all been drawn up but the game isn't over        
+       i. shuffle Cards on a Pile- this will be used incase cards on deck have all been drawn up but the game isn't over
+       
+5.ComputerPleyer Object
+     **Methods in this Object are
+       i. compareSpecial
+       ii. compareToPlay
+       iii. cardToPlay
+       iv. specialCardToPlay
