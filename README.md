@@ -82,6 +82,14 @@ There are many, many variations of this game, but the rules above are the ones t
      **Attributes in this object are 
        i. player Name
        ii. cards On Hand
+       iii. handSize
+       iv. usedDeck
+       v. usedPile
+       vi. numberOfPlayers
+       vii. nextPlayer
+       viii. turn
+       ix. semaphore
+       x. specialCardContainer
        
      **Methods in this object are 
        i. deal cards- this will be used to provide cards on hand to players
@@ -93,13 +101,15 @@ There are many, many variations of this game, but the rules above are the ones t
       
 4.Pile Object
      **Attributes in this object are 
-       i. number Of Cards- for storing the number of cards in the pile
        ii. pile- a conteiner for the cards on pile
 
      **Methods in this object are 
        i. shuffle Cards on a Pile- this will be used incase cards on deck have all been drawn up but the game isn't over
        
-5.ComputerPleyer Object
+5.SimulatedPleyer Object
+     **Attributes in this object are
+       i.all attributes from class player
+       
      **Methods in this Object are
        i. compareSpecial
        ii. compareToPlay
