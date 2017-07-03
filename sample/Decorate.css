@@ -1,0 +1,56 @@
+#pileCard{
+    -fx-border-radius: 5px;
+    -fx-background-radius: 6px;
+    -fx-background-color: linear-gradient(to top right,#121212,deepskyblue);
+    -fx-max-width: 100px;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 150px;
+}
+
+#spc{
+    -fx-text-fill: linear-gradient(to top right,#121212,deepskyblue);
+    -fx-translate-x: -250;
+    -fx-font-weight: lighter;
+    -fx-font-size: 1.5em;
+}
+
+#over{
+    -fx-background-color: linear-gradient(to bottom,orangered,red);
+
+}
+
+#overmessage{
+    -fx-text-fill: deepskyblue;
+}
+
+#deck{
+    -fx-min-width: 100px;
+    -fx-min-height: 150px;
+    -fx-translate-x: -15px;
+
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-background-color: whitesmoke;
+}
+#deck:hover,#pass:hover{
+    -fx-background-color: linear-gradient(to top right,#121212,deepskyblue);
+}
+
+#pass{
+    -fx-min-width: 100px;
+    -fx-background-color: whitesmoke;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
