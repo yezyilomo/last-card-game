@@ -1,5 +1,5 @@
 # Project Scenario
-Boredom is situation that actually meets anyone at a certain point, it may either be for a short time, in a while or lifetime. The most affected people are those in situations such as admitted patients in hospital for certain treatments, disable people, older people and many other stigmatized people in the society, yet many of them have access to digital devices such as PCs, smartphones etc.To reduce the boredom state there is a need that a person should recreate.
+Boredom is situation that actually meets anyone at a certain point, it may either be for a short time, in a while or lifetime. The most affected people are those in situations such as admitted patients in hospital for certain treatments, disable people, older people and many other stigmatized people in the society, yet many of them have access to digital devices such as PCs, smart phones etc.To reduce the boredom state there is a need that a person should recreate.
 In our own decision we decide the best way to solve the boredom problem is by playing LAST CARD game.
 
 Last card is a popular card game played in Tanzania, especially in schools, public venues, at home and working places, So it is not just some kind of fancy name for a card game but it is a big hit. The game has a set of rules that are to be followed and these are similar to some other rules in games like Uno and Mau Mau though there are other several rules that differentiate it from the these games. Since the game uses a deck of card, it's appropriate to illustrate the structure of deck of card first before explaining the rules of the game
@@ -61,25 +61,25 @@ Endgame When a player plays his last card he wins the game. The one exception is
 There are many, many variations of this game, but the rules above are the ones that we are going to implement for this project and they are actually common in Tanzania.
 
 
-**Observed Objects in this problem are 
+**Observed Objects in this problem are
 
 1.Card Object
-     **Attributes in this object are 
+     **Attributes in this object are
        i. cardRank
        ii. cardName
        iii. cardSuit
        iv. cardColor
 
 2.Deck Object
-     **Attributes in this object are 
+     **Attributes in this object are
        i. numberOfCards
-       ii. deck- a container for the cards 
-       
+       ii. deck- a container for the cards
+
      **Methods in this object are
        i. shuffle Cards- this is for mixing up cards to make it difficult to predict the structure of cards on deck
 
 3.Player Object
-     **Attributes in this object are 
+     **Attributes in this object are
        i. player Name
        ii. cards On Hand
        iii. handSize
@@ -90,26 +90,26 @@ There are many, many variations of this game, but the rules above are the ones t
        viii. turn
        ix. semaphore
        x. specialCardContainer
-       
-     **Methods in this object are 
+
+     **Methods in this object are
        i. deal cards- this will be used to provide cards on hand to players
        ii. play Card
        iii. draw Card From deck
-       iv. Handle penalt- this will be used in case the player has played wrong card
-       v. Handle special cards- this wil be used to control what to be done in case the player plays a special card eg 2,7,8,J or Joker
+       iv. Handle penalty - this will be used in case the player has played wrong card
+       v. Handle special cards- this will be used to control what to be done in case the player plays a special card eg 2,7,8,J or Joker
        vi. nextTurn- this will be used to determine who follows to play in the next turn
-      
-4.Pile Object
-     **Attributes in this object are 
-       ii. pile- a conteiner for the cards on pile
 
-     **Methods in this object are 
-       i. shuffle Cards on a Pile- this will be used incase cards on deck have all been drawn up but the game isn't over
-       
+4.Pile Object
+     **Attributes in this object are
+       ii. pile- a container for the cards on pile
+
+     **Methods in this object are
+       i. shuffle Cards on a Pile- this will be used in case cards on deck have all been drawn up but the game isn't over
+
 5.SimulatedPleyer Object
      **Attributes in this object are
        i.all attributes from class player
-       
+
      **Methods in this Object are
        i. compareSpecial
        ii. compareToPlay
