@@ -27,11 +27,11 @@
     -fx-min-width: 100px;
     -fx-min-height: 150px;
     -fx-translate-x: -15px;
-
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
     -fx-background-color: linear-gradient(to top right,#121212,deepskyblue);
 }
+
 #deck:hover,#pass:hover{
     -fx-background-color: linear-gradient(to top right,#121212,deepskyblue);
 }

@@ -1,9 +1,5 @@
 package sample.game;
 
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,13 +18,9 @@ import sample.EventControl;
 import javafx.scene.control.Label;
 import sample.Main;
 import sample.Play;
-
-import java.awt.Color;
-
 import java.io.FileInputStream;
 import java.util.*;
 import static sample.Main.myScene;
-import static sample.Main.myStage;
 
 public class Player {
   protected static int handSize=5;            //default handSize
