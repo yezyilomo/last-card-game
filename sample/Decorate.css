@@ -8,7 +8,7 @@
 }
 
 #spc{
-    -fx-text-fill: linear-gradient(to top right,#121212,deepskyblue);
+    -fx-text-fill: white;
     -fx-translate-x: -250;
     -fx-font-weight: lighter;
     -fx-font-size: 1.5em;
@@ -30,7 +30,7 @@
 
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
-    -fx-background-color: whitesmoke;
+    -fx-background-color: linear-gradient(to top right,#121212,deepskyblue);
 }
 #deck:hover,#pass:hover{
     -fx-background-color: linear-gradient(to top right,#121212,deepskyblue);
