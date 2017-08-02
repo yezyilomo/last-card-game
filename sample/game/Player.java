@@ -63,8 +63,8 @@ public class Player {
        HBox hand=new HBox(5);
        root.getChildren().add(hand);
 
-      root.setStyle("-fx-background-color: linear-gradient(to bottom right,red, #121212)");
-      //root.setStyle("-fx-background-color: #121212;");
+      //root.setStyle("-fx-background-color: linear-gradient(to bottom right,red, #121212)");
+      root.setStyle("-fx-background-color: #005200;");
 
     for(int i=0;i<this.cardsOnHand.size();i++){
 
@@ -80,9 +80,7 @@ public class Player {
         vw.setFitWidth(100);
         vw.setOnMouseClicked(new EventControl(this.cardsOnHand.get(i),this));
         hand.getChildren().add(vw);
-
     }
-
 
 
      HBox pilePic=new HBox(260);
